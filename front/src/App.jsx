@@ -1,19 +1,23 @@
 import { useState } from 'react'
 import './App.css'
-import { generateCaption } from './models/api'
+import { generateCaption, translateCaption } from './models/api'
 
 function App() {
   const [imageUrl, setImageUrl] = useState('')
   const [caption, setCaption] = useState('')
+  const [translatedCaption, setTranslatedCaption] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleGenerate() {
     if (!imageUrl) return
     setLoading(true)
     setCaption('')
+    setTranslatedCaption('')
     try {
       const result = await generateCaption(imageUrl)
       setCaption(result)
+      const translated = await translateCaption(result)
+      setTranslatedCaption(translated)
     } catch (err) {
       console.error(err)
     } finally {
@@ -44,6 +48,7 @@ function App() {
         <div className="caption-output">
           <img src={imageUrl} alt="source" className="source-image" />
           <p className="caption-label">{caption || 'Caption will appear here...'}</p>
+          {translatedCaption && <p className="caption-label caption-translated">{translatedCaption}</p>}
         </div>
       )}
     </div>

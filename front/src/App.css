@@ -75,6 +75,11 @@
   box-sizing: border-box;
 }
 
+.caption-translated {
+  color: var(--accent);
+  font-style: italic;
+}
+
 .source-image {
   width: 100%;
   height: 100%;
