@@ -42,27 +42,42 @@
   cursor: pointer;
   transition: opacity 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
 }
 
 .caption-output {
   width: 100%;
   max-width: 560px;
-  min-height: 200px;
   border-radius: 12px;
-  border: 1px dashed var(--border);
+  border: 1px solid var(--border);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--text-h);
-  text-align: center;
-  line-height: 1.6;
+  overflow: hidden;
 
-  p {
-    margin: 0;
-    padding: 16px;
-  }
+}
+
+.caption-label {
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--text);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.source-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
 }
