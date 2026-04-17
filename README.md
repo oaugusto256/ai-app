@@ -17,30 +17,30 @@ An AI-powered image captioning app that generates a caption from an image URL, t
 
 ```
 ┌─────────────────────────────────────────────┐
-│               Browser (Vite + React)         │
-│                                              │
+│               Browser (Vite + React)        │
+│                                             │
 │  ┌──────────────────────────────────────┐   │
 │  │  ImageCaptioner (transformers.js)    │   │
-│  │  vit-gpt2-image-captioning (ONNX)   │   │
+│  │  vit-gpt2-image-captioning (ONNX)    │   │
 │  └──────────────────────────────────────┘   │
-│          │ caption (EN)                      │
-│          ▼                                   │
-│  POST http://localhost:3000/translate        │
-│          │ translated text (PT-BR)           │
-│          ▼                                   │
-│  POST http://localhost:5001/text-to-audio    │
-│          │ audio file path                   │
-│          ▼                                   │
-│  GET  http://localhost:5001/audio/<id>.wav   │
+│          │ caption (EN)                     │
+│          ▼                                  │
+│  POST http://localhost:3000/translate       │
+│          │ translated text (PT-BR)          │
+│          ▼                                  │
+│  POST http://localhost:5001/text-to-audio   │
+│          │ audio file path                  │
+│          ▼                                  │
+│  GET  http://localhost:5001/audio/<id>.wav  │
 └─────────────────────────────────────────────┘
          │                        │
          ▼                        ▼
 ┌─────────────────┐    ┌─────────────────────┐
-│   server_node   │    │    server_python     │
-│   Express :3000 │    │    Flask :5001       │
-│                 │    │                      │
-│  nllb-200       │    │  Bark (suno/bark-    │
-│  (translation)  │    │  small) TTS model    │
+│   server_node   │    │    server_python    │
+│   Express :3000 │    │    Flask :5001      │
+│                 │    │                     │
+│  nllb-200       │    │  Bark (suno/bark-   │
+│  (translation)  │    │  small) TTS model   │
 └─────────────────┘    └─────────────────────┘
 ```
 
@@ -133,15 +133,16 @@ Runs at `http://127.0.0.1:5000`.
 
 ## Running with Docker
 
-Starts both backend services:
+Starts all three services:
 
 ```bash
 docker compose up
 ```
 
-| Service       | Host port |
+| Container     | Host port |
 |---------------|-----------|
+| front         | 5173      |
 | server_node   | 3000      |
 | server_python | 5001      |
 
-The frontend still runs locally via `npm run dev` in `front/`.
+App available at `http://localhost:5173`.
