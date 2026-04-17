@@ -2,6 +2,8 @@
 
 An AI-powered image captioning app that generates a caption from an image URL, translates it to Brazilian Portuguese, and converts the translation to speech.
 
+![ai-app](ai-app-printscreen.png)
+
 ---
 
 ## What it does
