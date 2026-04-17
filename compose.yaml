@@ -11,10 +11,18 @@ services:
   server:
     build:
       context: .
+      dockerfile: server_node/Dockerfile
     environment:
       NODE_ENV: production
     ports:
       - 3000:3000
+
+  server_python:
+    build:
+      context: .
+      dockerfile: server_python/Dockerfile
+    ports:
+      - 5001:5000
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

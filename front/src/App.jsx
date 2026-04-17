@@ -7,25 +7,38 @@ function App() {
   const [caption, setCaption] = useState('')
   const [translatedCaption, setTranslatedCaption] = useState('')
   const [audioUrl, setAudioUrl] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loadingCaption, setLoadingCaption] = useState(false)
+  const [loadingTranslation, setLoadingTranslation] = useState(false)
+  const [loadingAudio, setLoadingAudio] = useState(false)
+
+  const loading = loadingCaption || loadingTranslation || loadingAudio
 
   async function handleGenerate() {
     if (!imageUrl) return
-    setLoading(true)
     setCaption('')
     setTranslatedCaption('')
     setAudioUrl('')
+
     try {
+      setLoadingCaption(true)
       const result = await generateCaption(imageUrl)
       setCaption(result)
+      setLoadingCaption(false)
+
+      setLoadingTranslation(true)
       const translated = await translateCaption(result)
       setTranslatedCaption(translated)
+      setLoadingTranslation(false)
+
+      setLoadingAudio(true)
       const audio = await generateAudio(translated)
       setAudioUrl(audio)
+      setLoadingAudio(false)
     } catch (err) {
       console.error(err)
-    } finally {
-      setLoading(false)
+      setLoadingCaption(false)
+      setLoadingTranslation(false)
+      setLoadingAudio(false)
     }
   }
 
@@ -51,9 +64,21 @@ function App() {
       {imageUrl && (
         <div className="caption-output">
           <img src={imageUrl} alt="source" className="source-image" />
-          <p className="caption-label">{caption || 'Caption will appear here...'}</p>
-          {translatedCaption && <p className="caption-label caption-translated">{translatedCaption}</p>}
-          {audioUrl && <audio className="audio-player" src={audioUrl} controls />}
+
+          {loadingCaption
+            ? <div className="skeleton skeleton-text" />
+            : <p className="caption-label">{caption || 'Caption will appear here...'}</p>
+          }
+
+          {loadingTranslation
+            ? <div className="skeleton skeleton-text skeleton-text--short" />
+            : translatedCaption && <p className="caption-label caption-translated">{translatedCaption}</p>
+          }
+
+          {loadingAudio
+            ? <div className="skeleton skeleton-audio" />
+            : audioUrl && <audio className="audio-player" src={audioUrl} controls />
+          }
         </div>
       )}
     </div>
